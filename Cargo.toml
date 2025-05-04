@@ -1,0 +1,37 @@
+[package]
+name = "rating-physics"
+version = "1.0.0"
+authors = ["penakelex <alexeykoninsky129@gmail.com>"]
+edition = "2021"
+build = "build.rs"
+
+[target.'cfg(windows)'.build-dependencies]
+winres = "0.1"
+
+[dependencies]
+dioxus = { version = "0.6" }
+dioxus-material-icons = "3.0"
+rfd = { version = "0.15" }
+reqwest = { version = "0.12", features = ["multipart"]}
+serde = { version = "1.0", features = ["derive"]}
+serde_json = { version = "1.0" }
+fluent-templates = "0.13"
+lazy_static = "1.4"
+
+[features]
+default = ["desktop"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
