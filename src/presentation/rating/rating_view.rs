@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
-use crate::presentation::{locale::get_string_resource, rating::components::RatingDataView};
+use crate::presentation::rating::components::RatingDataView;
 
 use super::DataState;
 
@@ -84,9 +85,9 @@ pub fn RatingView(properites: RatingViewProperties) -> Element {
                         font_family: "sans-serif",
 
                         {if matches!(data, DataState::CantAccessServer) {
-                            get_string_resource("cant_access_server_label")
+                            t!("cant_access_server_label")
                         } else {
-                            get_string_resource("student_with_such_password_not_found_label")
+                            t!("student_with_such_password_not_found_label")
                         }}
                     }
                 }

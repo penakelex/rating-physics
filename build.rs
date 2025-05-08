@@ -4,3 +4,6 @@ fn main() {
     res.set_icon("icons_windows/icon.ico");
     res.compile().unwrap();
 }
+
+#[cfg(not(windows))]
+fn main() {}

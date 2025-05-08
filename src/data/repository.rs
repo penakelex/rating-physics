@@ -1,11 +1,16 @@
 use std::sync::Arc;
 
+use ciphered_file_type::CipheredFileType;
+use error::GetRatingDataError;
 use reqwest::{
     multipart::{Form, Part},
     Client,
 };
 
 use crate::domain::model::rating_data::RatingData;
+
+pub mod error;
+pub mod ciphered_file_type;
 
 const BASE_URL: &str = "http://45.90.46.187:8000/rating_physics";
 
@@ -41,6 +46,7 @@ impl RatingRepository {
         &self,
         password: u32,
         file_bytes: Vec<u8>,
+        file_type: CipheredFileType,
     ) -> Result<RatingData, GetRatingDataError> {
         let response = self
             .client
@@ -50,7 +56,7 @@ impl RatingRepository {
                     .part(
                         "file",
                         Part::bytes(file_bytes)
-                            .mime_str("application/octet-stream")
+                            .mime_str(file_type.as_mime_type_str())
                             .unwrap(),
                     )
                     .part(
@@ -81,10 +87,4 @@ impl RatingRepository {
             Err(_) => Err(GetRatingDataError::CantAccesServer),
         }
     }
-}
-
-pub enum GetRatingDataError {
-    CantAccesServer,
-    InvalidPassword,
-    InvalidRatingDataFormat,
 }

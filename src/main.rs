@@ -2,14 +2,15 @@
 
 use std::rc::Rc;
 
-use data::repository::GetRatingDataError;
+use crate::data::repository::error::GetRatingDataError;
 use data::repository::RatingRepository;
-use dioxus::desktop::tao::platform::windows::IconExtWindows;
-use dioxus::desktop::tao::window::Icon;
-use dioxus::desktop::wry::dpi::PhysicalSize;
 use dioxus::desktop::Config;
+use dioxus::desktop::LogicalSize;
 use dioxus::desktop::WindowBuilder;
 use dioxus::prelude::*;
+use dioxus_i18n::prelude::use_init_i18n;
+use dioxus_i18n::prelude::I18nConfig;
+use dioxus_i18n::unic_langid::langid;
 use dioxus_material_icons::*;
 
 use presentation::*;
@@ -19,17 +20,25 @@ pub mod domain;
 pub mod presentation;
 
 fn main() {
-    dioxus::LaunchBuilder::desktop()
-        .with_cfg(
-            Config::new()
-                .with_window(
-                    WindowBuilder::new()
-                        .with_title("RatingPhysics")
-                        .with_min_inner_size(PhysicalSize::new(700, 500)),
-                )
-                .with_icon(Icon::from_path("assets/icon.ico", None).unwrap())
-                .with_menu(None),
+    let base_config = Config::new()
+        .with_window(
+            WindowBuilder::new()
+                .with_title("RatingPhysics")
+                .with_min_inner_size(LogicalSize::new(700, 500)),
         )
+        .with_menu(None);
+
+    let config = if cfg!(target_os = "windows") {
+        use dioxus::desktop::tao::platform::windows::IconExtWindows;
+        use dioxus::desktop::tao::window::Icon;
+
+        base_config.with_icon(Icon::from_path("assets/icon.ico", None).unwrap())
+    } else {
+        base_config
+    };
+
+    dioxus::LaunchBuilder::desktop()
+        .with_cfg(config)
         .launch(App);
 }
 
@@ -38,6 +47,13 @@ fn App() -> Element {
     let mut data = use_signal(|| DataState::NotYetSearched);
 
     let repository = RatingRepository::new();
+
+    use_init_i18n(|| {
+        I18nConfig::new(langid!("ru-RU")).with_locale((
+            langid!("ru-RU"),
+            include_str!("data/locales/ru-RU/main.ftl"),
+        ))
+    });
 
     let latest_version_future = {
         let repository = repository.clone();
@@ -59,7 +75,7 @@ fn App() -> Element {
 
                 data.set(
                     match repository
-                        .get_rating_data(get_data.password, file_bytes)
+                        .get_rating_data(get_data.password, file_bytes, get_data.file_type)
                         .await
                     {
                         Ok(rating_data) => DataState::LoadedData(Rc::new(rating_data)),
@@ -87,7 +103,7 @@ fn App() -> Element {
             ),
         }
 
-        div{
+        div {
             position: "fixed",
             top: 0,
             left: 0,

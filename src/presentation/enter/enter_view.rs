@@ -2,15 +2,17 @@ use std::path::PathBuf;
 
 #[allow(non_snake_case)]
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 use dioxus_material_icons::*;
 use rfd::AsyncFileDialog;
 
-use crate::{enter::components::*, presentation::locale::get_string_resource};
+use crate::{data::repository::ciphered_file_type::CipheredFileType, enter::components::*};
 
 #[derive(Clone)]
 pub struct GetRatingData {
     pub password: u32,
     pub file_path: String,
+    pub file_type: CipheredFileType,
 }
 
 #[derive(Clone, PartialEq, Props)]
@@ -42,8 +44,8 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                 min_width: 0,
 
                 LabeledTextField {
-                    label: get_string_resource("password_label"),
-                    placeholder: get_string_resource("password_hint"),
+                    label: t!("password_label"),
+                    placeholder: t!("password_hint"),
                     text: password,
                     on_input: move |event: Event<FormData>| {
                         let new_password = event.value();
@@ -93,8 +95,8 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                     }
 
                     LabeledTextField {
-                        label: get_string_resource("file_label"),
-                        placeholder: get_string_resource("file_hint"),
+                        label: t!("file_label"),
+                        placeholder: t!("file_hint"),
                         text: file_path,
                         on_input: move |event: Event<FormData>| {
                             file_path.set(event.value());
@@ -114,7 +116,7 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
 
                             spawn(async move {
                                 if let Some(file) = AsyncFileDialog::new()
-                                    .add_filter(get_string_resource("file_label"), &["rpf"])
+                                    .add_filter(t!("file_label"), &["rpf", "zip"])
                                     .pick_file()
                                     .await
                                 {
@@ -128,7 +130,7 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                             });
                         },
 
-                        {get_string_resource("file_selection_button_label")}
+                        {t!("file_selection_button_label")}
                     }
                 }
             }
@@ -155,8 +157,12 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                         }
 
                         let path = PathBuf::from(file_path.as_str());
+                        let Some(extension) = path.extension() else {
+                            is_file_valid.set(false);
+                            return;
+                        };
 
-                        if !path.exists() || path.extension().is_none_or(|extension| extension != "rpf") {
+                        if !path.exists() || extension != "rpf" && extension != "zip" {
                             is_file_valid.set(false);
                         }
 
@@ -164,9 +170,14 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                             return;
                         }
 
+                        let Some(file_type) = CipheredFileType::try_from_str(extension.to_str().unwrap_or("")) else {
+                            return;
+                        };
+
                         properties.on_search.call(GetRatingData {
                             password: password.parse::<u32>().unwrap(),
                             file_path,
+                            file_type,
                         });
                     },
 
@@ -175,7 +186,7 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                         size: 16,
                     }
 
-                    {get_string_resource("search_button_label")}
+                    {t!("search_button_label")}
                 }
             }
         }

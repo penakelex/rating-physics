@@ -1,6 +1,5 @@
 use dioxus::prelude::*;
-
-use crate::presentation::locale::get_string_resource;
+use dioxus_i18n::t;
 
 const APP_VERSION: &str = "1.0.0";
 
@@ -38,7 +37,7 @@ pub fn InformationView(properties: InformationViewProperties) -> Element {
                             font_weight: "600",
                             font_size: "12px",
                             padding_right: "4px",
-                            {get_string_resource("update_app_label")}
+                            {t!("update_app_label")}
                         }
 
                         span {
@@ -68,13 +67,13 @@ pub fn InformationView(properties: InformationViewProperties) -> Element {
                     font_weight: "600",
                     font_size: "12px",
                     padding_right: "8px",
-                    {get_string_resource("contact_developer_label")}
+                    {t!("contact_developer_label")}
                 }
 
                 span {
                     font_size: "10px",
                     padding_right: "12px",
-                    {get_string_resource("developer_name")}
+                    {t!("developer_name")}
                 }
 
                 img {

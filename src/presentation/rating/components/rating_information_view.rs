@@ -1,10 +1,11 @@
 use std::{borrow::Cow, rc::Rc};
 
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 use crate::{
     domain::model::{practical_lesson::PracticalLesson, rating_data::RatingData},
-    presentation::{locale::get_string_resource, rating::components::list_data_view::ListDataView},
+    presentation::rating::components::list_data_view::ListDataView,
 };
 
 #[derive(Clone, PartialEq, Props)]
@@ -43,7 +44,7 @@ pub fn RatingDataView(properties: RatingDataViewProperties) -> Element {
                             .collect()
                     },
                     is_name_and_value_same_size: true,
-                    name: get_string_resource("practical_lessons_label"),
+                    name: t!("practical_lessons_label"),
                 }
             }
 
@@ -57,7 +58,7 @@ pub fn RatingDataView(properties: RatingDataViewProperties) -> Element {
                             .collect()
                     },
                     is_name_and_value_same_size: true,
-                    name: get_string_resource("cgts_label"),
+                    name: t!("cgts_label"),
                 }
             }
         }
@@ -67,49 +68,49 @@ pub fn RatingDataView(properties: RatingDataViewProperties) -> Element {
 fn list_rating_data(data: &RatingData) -> Vec<(String, String)> {
     let colloquium = match data.colloquium {
         Some(mark) => Cow::Owned(mark.to_string()),
-        None => Cow::Owned(get_string_resource("no_data_label")),
+        None => Cow::Owned(t!("no_data_label")),
     };
 
     let lw = match data.lw {
         Some(score) => Cow::Owned(score.to_string()),
-        None => Cow::Owned(get_string_resource("no_data_label")),
+        None => Cow::Owned(t!("no_data_label")),
     };
 
     let it = match data.it {
         Some(mark) => Cow::Owned(mark.to_string()),
-        None => Cow::Owned(get_string_resource("no_data_label")),
+        None => Cow::Owned(t!("no_data_label")),
     };
 
     let essay = match data.essay {
         Some(mark) => Cow::Owned(mark.to_string()),
-        None => Cow::Owned(get_string_resource("no_data_label")),
+        None => Cow::Owned(t!("no_data_label")),
     };
 
     let nirs = match data.nirs {
         Some(mark) => Cow::Owned(mark.to_string()),
-        None => Cow::Owned(get_string_resource("no_data_label")),
+        None => Cow::Owned(t!("no_data_label")),
     };
 
     let list: Vec<(String, Cow<str>)> = vec![
-        (get_string_resource("full_name_label"), Cow::Borrowed(&data.full_name)),
-        (get_string_resource("group_label"), Cow::Borrowed(&data.group)),
-        (get_string_resource("summary_label"), Cow::Owned(format!("{:.2}", data.summary))),
+        (t!("full_name_label"), Cow::Borrowed(&data.full_name)),
+        (t!("group_label"), Cow::Borrowed(&data.group)),
+        (t!("summary_label"), Cow::Owned(format!("{:.2}", data.summary))),
         (
-            get_string_resource("rating_group_label"),
+            t!("rating_group_label"),
             Cow::Owned(data.rating_group.to_string()),
         ),
-        (get_string_resource("rating_flow_label"), Cow::Owned(data.rating_flow.to_string())),
-        (get_string_resource("colloquium_label"), colloquium),
+        (t!("rating_flow_label"), Cow::Owned(data.rating_flow.to_string())),
+        (t!("colloquium_label"), colloquium),
         (
-            get_string_resource("cgt_cw_label"),
+            t!("cgt_cw_label"),
             Cow::Owned(format!("{:.2}", data.cgt_cw)),
         ),
-        (get_string_resource("lw_label"), lw),
-        (get_string_resource("it_label"), it),
-        (get_string_resource("essay_label"), essay),
-        (get_string_resource("nirs_label"), nirs),
+        (t!("lw_label"), lw),
+        (t!("it_label"), it),
+        (t!("essay_label"), essay),
+        (t!("nirs_label"), nirs),
         (
-            get_string_resource("sum_practice_label"),
+            t!("sum_practice_label"),
             Cow::Owned(data.sum_practice.to_string()),
         ),
     ];
@@ -127,12 +128,12 @@ fn practical_lesson_to_string(lesson: &PracticalLesson) -> String {
             let tasks_string = tasks.to_string();
             builder.push_str(tasks_string.as_str());
         }
-        None => builder.push_str(get_string_resource("no_data_label").as_str()),
+        None => builder.push_str(t!("no_data_label").as_str()),
     }
 
     if lesson.not_attend {
         builder.push(' ');
-        builder.push_str(get_string_resource("was_not_on_lesson_label").as_str());
+        builder.push_str(t!("was_not_on_lesson_label").as_str());
     }
 
     builder
@@ -141,6 +142,6 @@ fn practical_lesson_to_string(lesson: &PracticalLesson) -> String {
 fn cgt_task_to_string(tasks: &Option<u8>) -> String {
     match tasks {
         Some(tasks) => tasks.to_string(),
-        None => get_string_resource("no_data_label"),
+        None => t!("no_data_label"),
     }
 }

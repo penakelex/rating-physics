@@ -15,8 +15,7 @@ rfd = { version = "0.15" }
 reqwest = { version = "0.12", features = ["multipart"]}
 serde = { version = "1.0", features = ["derive"]}
 serde_json = { version = "1.0" }
-fluent-templates = "0.13"
-lazy_static = "1.4"
+dioxus-i18n = "0.4"
 
 [features]
 default = ["desktop"]
@@ -35,3 +34,6 @@ inherits = "dev"
 
 [profile.android-dev]
 inherits = "dev"
+
+[package.metadata.bundle]
+resources = ["locales/"]

@@ -11,7 +11,7 @@ pub struct LabeledTextFieldProperties {
     pub icon: String,
 }
 
-#[allow(non_snake_case)]
+ #[allow(non_snake_case)]
 pub fn LabeledTextField(properties: LabeledTextFieldProperties) -> Element {
     let mut is_focused = use_signal(|| false);
 
@@ -28,19 +28,27 @@ pub fn LabeledTextField(properties: LabeledTextFieldProperties) -> Element {
                     r#type: "text",
                     value: "{properties.text}",
                     placeholder: if is_focused() { properties.placeholder } else { "" },
-                    oninput: properties.on_input,
+                    oninput: move |e| properties.on_input.call(e),
                     onfocusin: move |_| is_focused.set(true),
                     onfocusout: move |_| is_focused.set(false),
                     spellcheck: false,
                 }
 
-                label { class: "input-label", "{properties.label}" }
+                label { 
+                    class: format!(
+                        "input-label {}",
+                        if !properties.text.is_empty() || is_focused() { "floating" } else { "" }
+                    ),
+                    "{properties.label}"
+                }
 
                 div { class: "field-icon",
                     MaterialIcon {
-                        name: properties.icon,
+                        name: properties.icon.clone(),
                         size: 28,
-                        color: MaterialIconColor::Custom(String::from("rgb(64, 71, 81)")),
+                        color: MaterialIconColor::Custom(String::from(
+                           if properties.is_error { "#ff3b30" } else { "rgb(64, 71, 81)" }
+                        )),
                     }
                 }
             }
@@ -76,8 +84,8 @@ pub fn LabeledTextField(properties: LabeledTextFieldProperties) -> Element {
                     font-family: sans-serif;
                     position: absolute;
                     left: 12px;
+                    top: 18px;
                     color: rgb(69, 76, 86);
-                    transform: translateY(100%);
                     pointer-events: none;
                     transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
                     max-width: calc(100% - 50px);
@@ -85,16 +93,13 @@ pub fn LabeledTextField(properties: LabeledTextFieldProperties) -> Element {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }}
-                .input-field:focus + .input-label,
-                .input-field:not(:empty) + .input-label,
-                .input-field:not(:placeholder-shown) + .input-label {{
+                .input-label.floating {{
                     top: -6px;
-                    transform: translateY(0) scale(0.85);
+                    transform: translateY(0%) scale(0.85);
                     font-size: 12px;
                     background: rgb(246, 247, 253);
                     padding: 0 4px;
                     left: 8px;
-                    max-width: calc(100% - 56px);
                 }}
                 .input-field:focus + .input-label {{
                     color: #8fb2fd;
