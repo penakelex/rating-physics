@@ -15,7 +15,7 @@ script = []
 [bundle]
 identifier = "org.penakelex"
 publisher = "penakelex"
-icon = ["assets/icon.ico", "icons_macos/icon.icns"]
+icon = ["icons_windows/icon.ico", "icons_macos/icon.icns"]
 
 [bundle.windows]
 tsp = true
