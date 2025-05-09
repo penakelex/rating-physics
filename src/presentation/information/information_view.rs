@@ -3,7 +3,7 @@ use dioxus_i18n::t;
 
 const APP_VERSION: &str = "1.0.0";
 
-const UPDATE_URL: &str = "";
+const UPDATE_URL: &str = "http://45.90.46.187:8000/rating_physics/get_apps";
 const TELEGRAM_URL: &str = "https://t.me/penakelex";
 
 static TELEGRAM_ICON: Asset = asset!("/assets/telegram.png");
