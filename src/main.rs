@@ -19,26 +19,32 @@ pub mod data;
 pub mod domain;
 pub mod presentation;
 
-fn main() {
-    let base_config = Config::new()
+#[cfg(windows)]
+fn app_config() -> Config {
+    Config::new()
         .with_window(
             WindowBuilder::new()
                 .with_title("RatingPhysics")
                 .with_min_inner_size(LogicalSize::new(700, 500)),
         )
-        .with_menu(None);
+        .with_icon(Icon::from_path("assets/icon.ico", None).unwrap())
+        .with_menu(None)
+}
 
-    let config = if cfg!(target_os = "windows") {
-        use dioxus::desktop::tao::platform::windows::IconExtWindows;
-        use dioxus::desktop::tao::window::Icon;
+#[cfg(not(windows))]
+fn app_config() -> Config {
+    Config::new()
+        .with_window(
+            WindowBuilder::new()
+                .with_title("RatingPhysics")
+                .with_min_inner_size(LogicalSize::new(700, 500)),
+        )
+        .with_menu(None)
+}
 
-        base_config.with_icon(Icon::from_path("assets/icon.ico", None).unwrap())
-    } else {
-        base_config
-    };
-
+fn main() {
     dioxus::LaunchBuilder::desktop()
-        .with_cfg(config)
+        .with_cfg(app_config())
         .launch(App);
 }
 
