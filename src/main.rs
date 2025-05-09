@@ -21,6 +21,8 @@ pub mod presentation;
 
 #[cfg(windows)]
 fn app_config() -> Config {
+    use dioxus::desktop::tao::{platform::windows::IconExtWindows, window::Icon};
+
     Config::new()
         .with_window(
             WindowBuilder::new()
