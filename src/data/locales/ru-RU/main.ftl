@@ -13,6 +13,7 @@ no_data_label = Нет данных
 full_name_label = ФИО
 group_label = Группа
 summary_label = Сумма
+omissions_label = Пропуски
 rating_group_label = Рейтинг в группе
 rating_flow_label = Рейтинг в потоке
 colloquium_label = Коллоквиум

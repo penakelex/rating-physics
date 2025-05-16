@@ -113,6 +113,7 @@ fn list_rating_data(data: &RatingData) -> Vec<(String, String)> {
             t!("sum_practice_label"),
             Cow::Owned(data.sum_practice.to_string()),
         ),
+        (t!("omissions_label"), Cow::Owned(data.omissions.to_string()))
     ];
 
     list.into_iter()
