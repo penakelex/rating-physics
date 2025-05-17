@@ -44,7 +44,7 @@ impl RatingRepository {
 
     pub async fn get_rating_data(
         &self,
-        password: u32,
+        password: u16,
         file_bytes: Vec<u8>,
         file_type: CipheredFileType,
     ) -> Result<RatingData, GetRatingDataError> {
