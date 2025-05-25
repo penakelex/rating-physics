@@ -1,6 +1,6 @@
 [package]
 name = "rating-physics"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["penakelex <alexeykoninsky129@gmail.com>"]
 edition = "2021"
 build = "build.rs"
