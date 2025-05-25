@@ -94,7 +94,7 @@ fn list_rating_data(data: &RatingData) -> Vec<(String, String)> {
     let list: Vec<(String, Cow<str>)> = vec![
         (t!("full_name_label"), Cow::Borrowed(&data.full_name)),
         (t!("group_label"), Cow::Borrowed(&data.group)),
-        (t!("summary_label"), Cow::Owned(format!("{:.2}", data.summary))),
+        (t!("summary_label"), Cow::Owned(format!("{:.2}", data.summary).replace('.', ","))),
         (
             t!("rating_group_label"),
             Cow::Owned(data.rating_group.to_string()),
@@ -103,7 +103,7 @@ fn list_rating_data(data: &RatingData) -> Vec<(String, String)> {
         (t!("colloquium_label"), colloquium),
         (
             t!("cgt_cw_label"),
-            Cow::Owned(format!("{:.2}", data.cgt_cw)),
+            Cow::Owned(format!("{:.2}", data.cgt_cw).replace('.', ",")),
         ),
         (t!("lw_label"), lw),
         (t!("it_label"), it),
@@ -113,7 +113,7 @@ fn list_rating_data(data: &RatingData) -> Vec<(String, String)> {
             t!("sum_practice_label"),
             Cow::Owned(data.sum_practice.to_string()),
         ),
-        (t!("omissions_label"), Cow::Owned(data.omissions.to_string()))
+        (t!("omissions_label"), Cow::Owned(data.omissions.to_string())),
     ];
 
     list.into_iter()

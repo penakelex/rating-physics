@@ -82,12 +82,11 @@ pub fn RatingView(properites: RatingViewProperties) -> Element {
                     p {
                         font_size: "18px",
                         overflow: "hidden",
-                        font_family: "sans-serif",
 
                         {if matches!(data, DataState::CantAccessServer) {
                             t!("cant_access_server_label")
                         } else {
-                            t!("student_with_such_password_not_found_label")
+                            t!("invalid_password_label")
                         }}
                     }
                 }

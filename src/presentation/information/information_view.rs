@@ -22,6 +22,7 @@ pub fn InformationView(properties: InformationViewProperties) -> Element {
             padding: "6px",
             flex_direction: "row",
             justify_content: "space-between",
+            align_items: "center",
             box_sizing: "border-box",
 
             {match properties.version {
@@ -31,7 +32,7 @@ pub fn InformationView(properties: InformationViewProperties) -> Element {
 
                         text_decoration: "none",
                         color: "rgb(64, 71, 81)",
-                        font_family: "sans-serif",
+                        margin: 0,
 
                         span {
                             font_weight: "600",
@@ -55,25 +56,42 @@ pub fn InformationView(properties: InformationViewProperties) -> Element {
                 }
             }}
 
-            a {
-                href: TELEGRAM_URL,
-
-                text_decoration: "none",
+            p {
                 color: "rgb(64, 71, 81)",
-                font_family: "sans-serif",
-
+                margin: 0,
 
                 span {
                     font_weight: "600",
                     font_size: "12px",
                     padding_right: "8px",
-                    {t!("contact_developer_label")}
+                    {t!("table_developer_label")}
                 }
 
                 span {
                     font_size: "10px",
                     padding_right: "12px",
-                    {t!("developer_name")}
+                    {t!("table_developer_name")}
+                }
+            }
+
+            a {
+                href: TELEGRAM_URL,
+
+                text_decoration: "none",
+                color: "rgb(64, 71, 81)",
+                margin: 0,
+
+                span {
+                    font_weight: "600",
+                    font_size: "12px",
+                    padding_right: "8px",
+                    {t!("contact_app_developer_label")}
+                }
+
+                span {
+                    font_size: "10px",
+                    padding_right: "12px",
+                    {t!("app_developer_name")}
                 }
 
                 img {

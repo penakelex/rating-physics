@@ -81,7 +81,6 @@ pub fn EnterView(properties: EnterViewProperties) -> Element {
                                 color: #f8f9ffff;
                                 padding: 10px;
                                 font-size: 16px;
-                                font-family: sans-serif;
                                 animation: ripple 0.6s linear;
                                 cursor: pointer;
                             }}

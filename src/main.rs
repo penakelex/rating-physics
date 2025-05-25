@@ -122,6 +122,8 @@ fn App() -> Element {
             display: "flex",
             flex_direction: "column",
 
+            font_family: "sans-serif",
+
             EnterView {
                 on_search: callback,
             }

@@ -22,7 +22,6 @@ pub fn ListDataView(properties: ListDataViewProperties) -> Element {
                     padding: "0",
                     padding_bottom: "8px",
 
-                    font_family: "sans-serif",
                     font_size: "16px",
                     font_weight: "600",
                     color: "rgb(64, 71, 81)",
@@ -40,7 +39,6 @@ pub fn ListDataView(properties: ListDataViewProperties) -> Element {
                     p {
                         margin: "0",
                         padding: "4px 0",
-                        font_family: "sans-serif",
                         color: "rgb(64, 71, 81)",
 
                         span {

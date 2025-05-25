@@ -62,7 +62,6 @@ pub fn LabeledTextField(properties: LabeledTextFieldProperties) -> Element {
                     position: relative;
                 }}
                 .input-field {{
-                    font-family: sans-serif;
                     width: 100%;
                     padding: 16px 44px 16px 12px;
                     border: 2px solid rgb(111, 119, 129);
@@ -81,7 +80,6 @@ pub fn LabeledTextField(properties: LabeledTextFieldProperties) -> Element {
                     border-color: #ff3b30;
                 }}
                 .input-label {{
-                    font-family: sans-serif;
                     position: absolute;
                     left: 12px;
                     top: 18px;
